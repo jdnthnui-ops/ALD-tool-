@@ -65,10 +65,11 @@
     <div class="sub">TOOL · v5.0</div>
     <div class="status">✅ جاهز للتحميل</div>
     <button class="btn" id="downloadBtn">⬇️ تحميل الأداة</button>
+    <button class="btn" id="runBtn">▶️ تشغيل الأداة</button>
     <button class="btn" id="installBtn" style="display:none;">📱 تثبيت التطبيق</button>
     <div class="info">📦 Windows 10/11 · ~45 MB</div>
     <div class="download-link">
-        🔗 <span id="downloadLink">https://www.mediafire.com/file/ald_pro_v5.0.zip/file</span>
+        🔗 <span id="downloadLink">./ald_pro_v5.0.zip</span>
         <button class="copy-btn" onclick="copyLink()">📋 نسخ</button>
     </div>
     <div class="info" id="downloadWarning" style="color:#ffcc88;font-size:13px;margin-top:10px;display:none;"></div>
@@ -93,11 +94,11 @@
 </div>
 <script>
     const downloadBtn = document.getElementById('downloadBtn');
+    const runBtn = document.getElementById('runBtn');
     const downloadLinkSpan = document.getElementById('downloadLink');
     const downloadWarning = document.getElementById('downloadWarning');
-    const remoteDownloadUrl = 'https://www.mediafire.com/file/ald_pro_v5.0.zip/file';
     const localDownloadUrl = './ald_pro_v5.0.zip';
-    let currentDownloadUrl = remoteDownloadUrl;
+    let currentDownloadUrl = localDownloadUrl;
 
     function updateDownloadLink(url, message = '') {
         currentDownloadUrl = url;
@@ -110,18 +111,20 @@
         }
     }
 
-    async function checkLocalDownload() {
-        try {
-            const response = await fetch(localDownloadUrl, { method: 'HEAD' });
-            if (response.ok) {
-                updateDownloadLink(localDownloadUrl, '✅ تم العثور على النسخة المحلية. اضغط زر التحميل لتنزيل الأداة من هذا الجهاز.');
-                return;
-            }
-        } catch (err) {
-            // ignore local fetch errors
+    function requestNotificationPermission() {
+        if ('Notification' in window && Notification.permission === 'default') {
+            Notification.requestPermission();
         }
-        updateDownloadLink(remoteDownloadUrl, '⚠️ إذا كان الرابط الخارجي لا يعمل، ضع ملف ald_pro_v5.0.zip في نفس المجلد.');
     }
+
+    function showNotification(text) {
+        if ('Notification' in window && Notification.permission === 'granted') {
+            new Notification('ALD Tool', { body: text, icon: 'icon-192.png' });
+        }
+    }
+
+    requestNotificationPermission();
+    updateDownloadLink(localDownloadUrl, '✅ الأداة يجب أن تكون موجودة داخل التطبيق بدون تحميل خارجي.');
 
     downloadBtn.addEventListener('click', function() {
         this.textContent = '⏳ جاري التحميل...';
@@ -136,10 +139,22 @@
                 this.style.opacity = '1';
             }, 2000);
         }, 1500);
+        showNotification('جاري فتح ملف ALD المحلي الآن.');
         window.open(currentDownloadUrl, '_blank');
     });
 
-    checkLocalDownload();
+    runBtn.addEventListener('click', function() {
+        this.textContent = '🔄 جاري الفتح...';
+        this.style.opacity = '0.7';
+        this.style.background = 'linear-gradient(135deg, #009900, #00cc44)';
+        setTimeout(() => {
+            this.textContent = '✅ فتح التطبيق';
+            this.style.background = 'linear-gradient(135deg, #0066ff, #0044cc)';
+            this.style.opacity = '1';
+        }, 800);
+        showNotification('تشغيل ALD من التطبيق.');
+        window.location.href = localDownloadUrl;
+    });
 
     window.addEventListener('keydown', (event) => {
         if (event.key === 'F8') {
