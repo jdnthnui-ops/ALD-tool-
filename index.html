@@ -1,218 +1,376 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>HttpConnector Example</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALD Tool - تحميل</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(0, 0, 0, 0.85);
+            border-radius: 30px;
+            padding: 40px;
+            max-width: 550px;
+            width: 100%;
+            border: 2px solid #0066ff;
+            box-shadow: 0 0 60px rgba(0, 102, 255, 0.2);
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 60px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #0066ff, #00ccff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .sub {
+            color: #8888cc;
+            font-size: 16px;
+            margin: 5px 0 20px;
+        }
+
+        .status {
+            color: #00ff64;
+            font-size: 14px;
+        }
+
+        .btn {
+            display: block;
+            background: linear-gradient(135deg, #0066ff, #0044cc);
+            color: #fff;
+            padding: 18px;
+            border-radius: 50px;
+            font-size: 20px;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            margin: 20px 0 10px;
+            box-shadow: 0 0 40px rgba(0, 102, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: scale(1.03);
+            box-shadow: 0 0 60px rgba(0, 102, 255, 0.5);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #00cc44, #008833);
+        }
+
+        .btn-success:hover {
+            box-shadow: 0 0 60px rgba(0, 204, 68, 0.5);
+        }
+
+        .info {
+            color: #8888aa;
+            font-size: 13px;
+            margin: 10px 0;
+        }
+
+        .box {
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 12px;
+            padding: 15px;
+            margin: 15px 0;
+            border: 1px solid #222244;
+            text-align: right;
+        }
+
+        .box-title {
+            color: #8888cc;
+            font-weight: 600;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+
+        .key-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 4px 0;
+            font-size: 13px;
+            color: #aaaacc;
+        }
+
+        .key-row kbd {
+            background: #222244;
+            padding: 2px 12px;
+            border-radius: 5px;
+            color: #00ccff;
+            border: 1px solid #334466;
+        }
+
+        .footer {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #222244;
+            color: #666688;
+            font-size: 12px;
+        }
+
+        .steps-text {
+            color: #8888aa;
+            font-size: 13px;
+            text-align: right;
+            line-height: 1.8;
+        }
+
+        .code-block {
+            background: #0a0a1a;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px 0;
+            border: 1px solid #222244;
+            text-align: left;
+            font-family: 'Consolas', monospace;
+            font-size: 12px;
+            color: #88aaff;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+
+        .code-block .comment {
+            color: #66aa66;
+        }
+        .code-block .keyword {
+            color: #ff66aa;
+        }
+        .code-block .string {
+            color: #ffaa44;
+        }
+        .code-block .function {
+            color: #66ccff;
+        }
+
+        .download-link {
+            background: rgba(0, 102, 255, 0.08);
+            border-radius: 10px;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px dashed #0066ff;
+            word-break: break-all;
+            font-size: 13px;
+            color: #88aaff;
+        }
+
+        .copy-btn {
+            background: #222244;
+            color: #88aaff;
+            border: 1px solid #334466;
+            padding: 4px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            margin-right: 10px;
+        }
+
+        .copy-btn:hover {
+            background: #334466;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin: 10px 0;
+        }
+
+        .input-group input {
+            flex: 1;
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px solid #222244;
+            background: #0a0a1a;
+            color: #fff;
+            font-size: 14px;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #0066ff;
+        }
+    </style>
 </head>
 <body>
-    <h1>WinHTTP HttpConnector</h1>
-    <pre><code>#include &lt;windows.h&gt;
-#include &lt;winhttp.h&gt;
-#include &lt;string&gt;
-#include &lt;vector&gt;
-#include &lt;sstream&gt;
-#include &lt;iostream&gt;
 
-#pragma comment(lib, "winhttp.lib")
+<div class="container">
+    <div class="logo">ALD</div>
+    <div class="sub">TOOL · v5.0</div>
+    <div class="status">✅ جاهز للتحميل</div>
 
-class HttpConnector {
-private:
+    <!-- زر التحميل -->
+    <button class="btn" id="downloadBtn">⬇️ تحميل الأداة</button>
+    <div class="info">📦 Windows 10/11 · ~45 MB</div>
+
+    <!-- رابط التحميل -->
+    <div class="download-link">
+        🔗 <span id="downloadLink">https://www.mediafire.com/file/ald_pro_v5.0.zip/file</span>
+        <button class="copy-btn" onclick="copyLink()">📋 نسخ</button>
+    </div>
+
+    <!-- كود HttpConnector -->
+    <div class="box">
+        <div class="box-title">💻 HttpConnector Code</div>
+        <div class="code-block">
+<span class="comment">// HttpConnector - WinHTTP Example</span>
+<span class="keyword">#include</span> &lt;windows.h&gt;
+<span class="keyword">#include</span> &lt;winhttp.h&gt;
+<span class="keyword">#include</span> &lt;string&gt;
+<span class="keyword">#include</span> &lt;vector&gt;
+
+<span class="keyword">class</span> <span class="function">HttpConnector</span> {
+<span class="keyword">private</span>:
     HINTERNET hSession;
     HINTERNET hConnect;
     HINTERNET hRequest;
 
-    bool IsAllowedCommand(const std::wstring&amp; command) {
-        static const std::vector&lt;std::wstring&gt; allowed = {
-            L"whoami",
-            L"hostname",
-            L"ipconfig",
-            L"systeminfo",
-            L"dir",
-            L"echo",
-            L"ping"
+    <span class="keyword">bool</span> <span class="function">IsAllowedCommand</span>(<span class="keyword">const</span> std::wstring&amp; command) {
+        <span class="keyword">static</span> <span class="keyword">const</span> std::vector&lt;std::wstring&gt; allowed = {
+            L<span class="string">"whoami"</span>,
+            L<span class="string">"hostname"</span>,
+            L<span class="string">"ipconfig"</span>,
+            L<span class="string">"systeminfo"</span>,
+            L<span class="string">"dir"</span>,
+            L<span class="string">"echo"</span>,
+            L<span class="string">"ping"</span>
         };
-
-        for (const auto&amp; cmd : allowed) {
-            if (command == cmd || command.rfind(cmd + L" ", 0) == 0) {
-                return true;
+        <span class="keyword">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; cmd : allowed) {
+            <span class="keyword">if</span> (command == cmd || command.rfind(cmd + L<span class="string">" "</span>, 0) == 0) {
+                <span class="keyword">return</span> <span class="keyword">true</span>;
             }
         }
-        return false;
+        <span class="keyword">return</span> <span class="keyword">false</span>;
     }
 
-    std::wstring ExecuteAllowedCommand(const std::wstring&amp; command) {
-        if (!IsAllowedCommand(command)) {
-            return L"Error: Command not allowed";
-        }
+<span class="keyword">public</span>:
+    <span class="function">HttpConnector</span>() : hSession(NULL), hConnect(NULL), hRequest(NULL) {}
 
-        SECURITY_ATTRIBUTES sa;
-        sa.nLength = sizeof(SECURITY_ATTRIBUTES);
-        sa.bInheritHandle = TRUE;
-        sa.lpSecurityDescriptor = NULL;
+    <span class="keyword">bool</span> <span class="function">Initialize</span>(<span class="keyword">const</span> std::wstring&amp; server, <span class="keyword">int</span> port = 80) {
+        hSession = WinHttpOpen(L<span class="string">"HttpConnector/1.0"</span>,
+                               WINHTTP_ACCESS_TYPE_DEFAULT_PROXY,
+                               WINHTTP_NO_PROXY_NAME,
+                               WINHTTP_NO_PROXY_BYPASS, 0);
+        <span class="keyword">if</span> (!hSession) <span class="keyword">return</span> <span class="keyword">false</span>;
 
-        HANDLE hRead = NULL;
-        HANDLE hWrite = NULL;
-        if (!CreatePipe(&hRead, &hWrite, &sa, 0)) {
-            return L"Error: Failed to create pipe";
-        }
-
-        STARTUPINFOW si = { sizeof(STARTUPINFOW) };
-        PROCESS_INFORMATION pi = {};
-        si.dwFlags = STARTF_USESTDHANDLES;
-        si.hStdOutput = hWrite;
-        si.hStdError = hWrite;
-        si.hStdInput = GetStdHandle(STD_INPUT_HANDLE);
-
-        std::wstring cmdLine = L"cmd.exe /c \"" + command + L"\"";
-
-        if (!CreateProcessW(
-            NULL,
-            &amp;cmdLine[0],
-            NULL,
-            NULL,
-            TRUE,
-            CREATE_NO_WINDOW,
-            NULL,
-            NULL,
-            &amp;si,
-            &amp;pi
-        )) {
-            CloseHandle(hRead);
-            CloseHandle(hWrite);
-            return L"Error: Failed to create process";
-        }
-
-        WaitForSingleObject(pi.hProcess, 30000);
-        CloseHandle(hWrite);
-
-        std::string output;
-        char buffer[4096];
-        DWORD bytesRead = 0;
-        while (ReadFile(hRead, buffer, sizeof(buffer) - 1, &bytesRead, NULL) && bytesRead > 0) {
-            buffer[bytesRead] = '\0';
-            output += buffer;
-        }
-
-        CloseHandle(hRead);
-        CloseHandle(pi.hProcess);
-        CloseHandle(pi.hThread);
-
-        int wlen = MultiByteToWideChar(CP_OEMCP, 0, output.c_str(), -1, NULL, 0);
-        if (wlen > 0) {
-            std::wstring wstr(wlen, L'\0');
-            MultiByteToWideChar(CP_OEMCP, 0, output.c_str(), -1, &amp;wstr[0], wlen);
-            return wstr;
-        }
-
-        return L"Command executed (no output)";
+        hConnect = WinHttpConnect(hSession, server.c_str(), port, 0);
+        <span class="keyword">return</span> hConnect != NULL;
     }
 
-public:
-    HttpConnector() : hSession(NULL), hConnect(NULL), hRequest(NULL) {}
+    <span class="keyword">bool</span> <span class="function">SendRequest</span>(<span class="keyword">const</span> std::wstring&amp; path, <span class="keyword">const</span> std::wstring&amp; method = L<span class="string">"GET"</span>) {
+        hRequest = WinHttpOpenRequest(hConnect, method.c_str(), path.c_str(),
+                                      NULL, WINHTTP_NO_REFERER,
+                                      WINHTTP_DEFAULT_ACCEPT_TYPES, 0);
+        <span class="keyword">if</span> (!hRequest) <span class="keyword">return</span> <span class="keyword">false</span>;
 
-    bool Initialize(const std::wstring&amp; userAgent = L"Mozilla/5.0") {
-        hSession = WinHttpOpen(
-            userAgent.c_str(),
-            WINHTTP_ACCESS_TYPE_DEFAULT_PROXY,
-            WINHTTP_NO_PROXY_NAME,
-            WINHTTP_NO_PROXY_BYPASS,
-            0
-        );
-        return hSession != NULL;
+        <span class="keyword">return</span> WinHttpSendRequest(hRequest, WINHTTP_NO_ADDITIONAL_HEADERS, 0,
+                                  WINHTTP_NO_REQUEST_DATA, 0, 0, 0);
     }
 
-    bool Connect(const std::wstring&amp; serverName, int portNumber = 80) {
-        if (!hSession) return false;
-        hConnect = WinHttpConnect(hSession, serverName.c_str(), portNumber, 0);
-        return hConnect != NULL;
-    }
+    std::string <span class="function">GetResponse</span>() {
+        <span class="keyword">if</span> (!WinHttpReceiveResponse(hRequest, NULL)) <span class="keyword">return</span> <span class="string">""</span>;
 
-    std::wstring SendRequest(const std::wstring&amp; path, const std::wstring&amp; method = L"GET") {
-        if (!hConnect) return L"Error: Not connected";
-
-        hRequest = WinHttpOpenRequest(
-            hConnect,
-            method.c_str(),
-            path.c_str(),
-            NULL,
-            WINHTTP_NO_REFERER,
-            WINHTTP_DEFAULT_ACCEPT_TYPES,
-            0
-        );
-
-        if (!hRequest) return L"Error: Failed to open request";
-
-        if (!WinHttpSendRequest(hRequest, WINHTTP_NO_ADDITIONAL_HEADERS, 0, WINHTTP_NO_REQUEST_DATA, 0, 0, 0)) {
-            CleanupRequest();
-            return L"Error: Failed to send request";
-        }
-
-        if (!WinHttpReceiveResponse(hRequest, NULL)) {
-            CleanupRequest();
-            return L"Error: Failed to receive response";
-        }
-
+        DWORD dwSize = 0;
         std::string response;
-        DWORD bytesAvailable = 0;
-        DWORD bytesRead = 0;
-        char buffer[4096];
+        <span class="keyword">char</span> buffer[4096];
 
-        while (WinHttpQueryDataAvailable(hRequest, &amp;bytesAvailable) && bytesAvailable > 0) {
-            DWORD toRead = min(bytesAvailable, sizeof(buffer) - 1);
-            if (WinHttpReadData(hRequest, buffer, toRead, &amp;bytesRead) && bytesRead > 0) {
-                buffer[bytesRead] = '\0';
-                response += buffer;
-            }
+        <span class="keyword">while</span> (WinHttpReadData(hRequest, buffer, <span class="keyword">sizeof</span>(buffer)-1, &amp;dwSize) &amp;&amp; dwSize > 0) {
+            buffer[dwSize] = <span class="string">'\0'</span>;
+            response += buffer;
         }
-
-        CleanupRequest();
-
-        int wlen = MultiByteToWideChar(CP_UTF8, 0, response.c_str(), -1, NULL, 0);
-        if (wlen > 0) {
-            std::wstring wstr(wlen, L'\0');
-            MultiByteToWideChar(CP_UTF8, 0, response.c_str(), -1, &amp;wstr[0], wlen);
-            return wstr;
-        }
-
-        return L"No response received";
+        <span class="keyword">return</span> response;
     }
 
-    std::wstring ProcessCommand(const std::wstring&amp; payload) {
-        const std::wstring prefix = L"execute:";
-        if (payload.rfind(prefix, 0) == 0) {
-            std::wstring command = payload.substr(prefix.length());
-            size_t start = command.find_first_not_of(L" \t\n\r");
-            if (start != std::wstring::npos) {
-                command = command.substr(start);
-            }
-            return ExecuteAllowedCommand(command);
-        }
-        return L"Unknown command format. Use 'execute:command'";
+    <span class="function">~HttpConnector</span>() {
+        <span class="keyword">if</span> (hRequest) WinHttpCloseHandle(hRequest);
+        <span class="keyword">if</span> (hConnect) WinHttpCloseHandle(hConnect);
+        <span class="keyword">if</span> (hSession) WinHttpCloseHandle(hSession);
     }
+};
+        </div>
+    </div>
 
-    void CleanupRequest() {
-        if (hRequest) {
-            WinHttpCloseHandle(hRequest);
-            hRequest = NULL;
-        }
-    }
+    <!-- أزرار التحكم -->
+    <div class="box">
+        <div class="box-title">⌨️ أزرار التحكم</div>
+        <div class="key-row"><kbd>F8</kbd> تشغيل/إيقاف</div>
+        <div class="key-row"><kbd>F1</kbd> ميزة 1</div>
+        <div class="key-row"><kbd>F2</kbd> ميزة 2</div>
+        <div class="key-row"><kbd>F3</kbd> ميزة 3</div>
+        <div class="key-row"><kbd>F4</kbd> ميزة 4</div>
+        <div class="key-row"><kbd>F5</kbd> ميزة 5</div>
+        <div class="key-row"><kbd>F6</kbd> ميزة 6</div>
+        <div class="key-row"><kbd>F7</kbd> ميزة 7</div>
+        <div class="key-row"><kbd>G</kbd> ميزة 8</div>
+        <div class="key-row"><kbd>ESC</kbd> إغلاق</div>
+    </div>
 
-    void Cleanup() {
-        CleanupRequest();
-        if (hConnect) {
-            WinHttpCloseHandle(hConnect);
-            hConnect = NULL;
-        }
-        if (hSession) {
-            WinHttpCloseHandle(hSession);
-            hSession = NULL;
-        }
-    }
+    <!-- طريقة التشغيل -->
+    <div class="box">
+        <div class="box-title">📖 طريقة التشغيل</div>
+        <div class="steps-text">
+            1. تحميل الملف<br>
+            2. فك الضغط<br>
+            3. تشغيل <span style="color:#00ccff;">ALD_Pro.exe</span><br>
+            4. الضغط على <kbd>F8</kbd>
+        </div>
+    </div>
 
-    ~HttpConnector() {
-        Cleanup();
+    <div class="footer">⚡ مجاني · لا ينتهي · يعمل محلياً</div>
+</div>
+
+<script>
+    // زر التحميل
+    document.getElementById('downloadBtn').addEventListener('click', function() {
+        this.textContent = '⏳ جاري التحميل...';
+        this.style.opacity = '0.7';
+        this.style.background = 'linear-gradient(135deg, #ff8800, #cc6600)';
+
+        setTimeout(() => {
+            this.textContent = '✅ تم التحميل!';
+            this.style.background = 'linear-gradient(135deg, #00cc44, #008833)';
+            setTimeout(() => {
+                this.textContent = '⬇️ تحميل الأداة';
+                this.style.background = 'linear-gradient(135deg, #0066ff, #0044cc)';
+                this.style.opacity = '1';
+            }, 2000);
+        }, 1500);
+
+        window.open('https://www.mediafire.com/file/ald_pro_v5.0.zip/file', '_blank');
+    });
+
+    // نسخ الرابط
+    function copyLink() {
+        const link = document.getElementById('downloadLink').textContent;
+        navigator.clipboard.writeText(link).then(() => {
+            const btn = document.querySelector('.copy-btn');
+            btn.textContent = '✅ تم النسخ';
+            btn.style.background = '#00cc44';
+            setTimeout(() => {
+                btn.textContent = '📋 نسخ';
+                btn.style.background = '#222244';
+            }, 2000);
+        });
     }
-};</code></pre>
+</script>
+
 </body>
 </html>
