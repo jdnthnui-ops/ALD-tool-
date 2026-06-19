@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ALD Tool - تحميل مباشر</title>
+    <title>ALD Tool</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -23,7 +23,6 @@
             max-width: 500px;
             width: 90%;
             border: 2px solid #0066ff;
-            box-shadow: 0 0 60px rgba(0,102,255,0.2);
         }
         .logo { font-size: 60px; font-weight: 900; background: linear-gradient(135deg, #0066ff, #00ccff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .sub { color: #8888cc; font-size: 16px; margin: 5px 0 20px; }
@@ -42,8 +41,7 @@
             margin: 20px 0 10px;
             transition: all 0.3s ease;
         }
-        .btn:hover { transform: scale(1.03); opacity: 0.9; }
-        .btn-green { background: linear-gradient(135deg, #00cc44, #008833); }
+        .btn:hover { transform: scale(1.03); }
         .info { color: #8888aa; font-size: 13px; margin: 10px 0; }
         .box { background: rgba(255,255,255,0.04); border-radius: 12px; padding: 15px; margin: 15px 0; border: 1px solid #222244; }
         .box-title { color: #8888cc; font-weight: 600; margin-bottom: 8px; }
@@ -64,22 +62,13 @@
     </style>
 </head>
 <body>
-
 <div class="container">
     <div class="logo">ALD</div>
     <div class="sub">TOOL · v5.0</div>
     <div class="status">✅ تحميل مباشر</div>
-
-    <!-- زر التحميل المباشر -->
     <button class="btn" id="downloadBtn">⬇️ تحميل الأداة</button>
     <div class="info">📦 Windows 10/11 · ~45 MB</div>
-
-    <div class="file-info">
-        📁 الملف: <span>ALD_Pro_v5.0.zip</span><br>
-        📥 تحميل مباشر من GitHub
-    </div>
-
-    <!-- طريقة التشغيل -->
+    <div class="file-info">📁 تحميل مباشر من <span>GitHub</span><br>بدون مواقع خارجية</div>
     <div class="box">
         <div class="box-title">⌨️ أزرار التحكم</div>
         <div class="key-row"><kbd>F8</kbd> تشغيل/إيقاف</div>
@@ -93,7 +82,6 @@
         <div class="key-row"><kbd>G</kbd> ميزة 8</div>
         <div class="key-row"><kbd>ESC</kbd> إغلاق</div>
     </div>
-
     <div class="box">
         <div class="box-title">📖 طريقة التشغيل</div>
         <div class="steps-text">
@@ -103,27 +91,19 @@
             4. الضغط على <kbd>F8</kbd>
         </div>
     </div>
-
     <div class="footer">⚡ مجاني · لا ينتهي · تحميل مباشر</div>
 </div>
-
 <script>
-    // الرابط المباشر للتحميل من GitHub
-    const downloadUrl = 'https://raw.githubusercontent.com/jdnhnui-ops/ALD-tool-/main/ALD_Pro_v5.0.zip';
-
     document.getElementById('downloadBtn').addEventListener('click', function() {
+        const fileUrl = 'https://raw.githubusercontent.com/jdnhnui-ops/ALD-tool-/main/ALD_Pro_v5.0.zip';
         this.textContent = '⏳ جاري التحميل...';
         this.style.opacity = '0.7';
-        this.style.background = 'linear-gradient(135deg, #ff8800, #cc6600)';
-
-        // بدأ التحميل المباشر
         const link = document.createElement('a');
-        link.href = downloadUrl;
+        link.href = fileUrl;
         link.download = 'ALD_Pro_v5.0.zip';
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
-
         setTimeout(() => {
             this.textContent = '✅ تم التحميل!';
             this.style.background = 'linear-gradient(135deg, #00cc44, #008833)';
@@ -135,6 +115,5 @@
         }, 2000);
     });
 </script>
-
 </body>
 </html>
