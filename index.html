@@ -67,11 +67,10 @@
             border-radius: 50px;
             font-size: 20px;
             font-weight: 700;
-            text-decoration: none;
-            margin: 20px 0 10px;
             border: none;
             cursor: pointer;
             width: 100%;
+            margin: 20px 0 10px;
             box-shadow: 0 0 40px rgba(0, 102, 255, 0.3);
             transition: all 0.3s ease;
         }
@@ -108,7 +107,6 @@
             padding: 2px 12px;
             border-radius: 5px;
             color: #00ccff;
-            font-size: 12px;
             border: 1px solid #334466;
         }
         .footer {
@@ -154,15 +152,15 @@
         <div class="logo">ALD</div>
         <div class="sub">TOOL · v5.0</div>
         <div class="status"><span class="dot"></span> جاهز للتحميل</div>
-        
+
         <button class="btn" id="downloadBtn">⬇️ تحميل الأداة</button>
         <div class="info">📦 Windows 10/11 · ~45 MB</div>
-        
+
         <div class="link-box">
             🔗 <span id="downloadLink">https://www.mediafire.com/file/ald_pro_v5.0.zip/file</span>
             <button class="copy-btn" onclick="copyLink()">📋 نسخ</button>
         </div>
-        
+
         <div class="box">
             <div class="box-title">⌨️ أزرار التحكم</div>
             <div class="key-row"><kbd>F8</kbd> تشغيل/إيقاف</div>
@@ -176,7 +174,7 @@
             <div class="key-row"><kbd>G</kbd> ميزة 8</div>
             <div class="key-row"><kbd>ESC</kbd> إغلاق</div>
         </div>
-        
+
         <div class="box">
             <div class="box-title">📖 طريقة التشغيل</div>
             <div class="steps-text">
@@ -186,7 +184,7 @@
                 4. الضغط على <kbd>F8</kbd>
             </div>
         </div>
-        
+
         <div class="footer">⚡ مجاني · لا ينتهي · يعمل محلياً</div>
     </div>
 
@@ -195,7 +193,7 @@
             this.textContent = '⏳ جاري التحميل...';
             this.style.opacity = '0.7';
             this.style.background = 'linear-gradient(135deg, #ff8800, #cc6600)';
-            
+
             setTimeout(() => {
                 this.textContent = '✅ تم التحميل!';
                 this.style.background = 'linear-gradient(135deg, #00cc44, #008833)';
@@ -205,7 +203,7 @@
                     this.style.opacity = '1';
                 }, 2000);
             }, 1500);
-            
+
             window.open('https://www.mediafire.com/file/ald_pro_v5.0.zip/file', '_blank');
         });
 
@@ -213,26 +211,11 @@
             const link = document.getElementById('downloadLink').textContent;
             navigator.clipboard.writeText(link).then(() => {
                 const btn = document.querySelector('.copy-btn');
-                const originalText = btn.textContent;
                 btn.textContent = '✅ تم النسخ';
                 btn.style.background = '#00cc44';
                 setTimeout(() => {
-                    btn.textContent = originalText;
-                    btn.style.background = '#222244';
-                }, 2000);
-            }).catch(() => {
-                // إذا لم يعمل Clipboard API
-                const linkText = document.getElementById('downloadLink').textContent;
-                const textArea = document.createElement('textarea');
-                textArea.value = linkText;
-                document.body.appendChild(textArea);
-                textArea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textArea);
-                const btn = document.querySelector('.copy-btn');
-                btn.textContent = '✅ تم النسخ';
-                setTimeout(() => {
                     btn.textContent = '📋 نسخ';
+                    btn.style.background = '#222244';
                 }, 2000);
             });
         }
