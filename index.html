@@ -71,6 +71,7 @@
         🔗 <span id="downloadLink">https://www.mediafire.com/file/ald_pro_v5.0.zip/file</span>
         <button class="copy-btn" onclick="copyLink()">📋 نسخ</button>
     </div>
+    <div class="info" id="downloadWarning" style="color:#ffcc88;font-size:13px;margin-top:10px;display:none;"></div>
     <div class="box">
         <div class="box-title">⌨️ أزرار التحكم</div>
         <div class="key-row"><kbd>F8</kbd> تشغيل/إيقاف</div>
@@ -91,7 +92,38 @@
     <div class="footer">⚡ مجاني · لا ينتهي · يعمل محلياً</div>
 </div>
 <script>
-    document.getElementById('downloadBtn').addEventListener('click', function() {
+    const downloadBtn = document.getElementById('downloadBtn');
+    const downloadLinkSpan = document.getElementById('downloadLink');
+    const downloadWarning = document.getElementById('downloadWarning');
+    const remoteDownloadUrl = 'https://www.mediafire.com/file/ald_pro_v5.0.zip/file';
+    const localDownloadUrl = './ald_pro_v5.0.zip';
+    let currentDownloadUrl = remoteDownloadUrl;
+
+    function updateDownloadLink(url, message = '') {
+        currentDownloadUrl = url;
+        downloadLinkSpan.textContent = url;
+        if (message) {
+            downloadWarning.textContent = message;
+            downloadWarning.style.display = 'block';
+        } else {
+            downloadWarning.style.display = 'none';
+        }
+    }
+
+    async function checkLocalDownload() {
+        try {
+            const response = await fetch(localDownloadUrl, { method: 'HEAD' });
+            if (response.ok) {
+                updateDownloadLink(localDownloadUrl, '✅ تم العثور على النسخة المحلية. اضغط زر التحميل لتنزيل الأداة من هذا الجهاز.');
+                return;
+            }
+        } catch (err) {
+            // ignore local fetch errors
+        }
+        updateDownloadLink(remoteDownloadUrl, '⚠️ إذا كان الرابط الخارجي لا يعمل، ضع ملف ald_pro_v5.0.zip في نفس المجلد.');
+    }
+
+    downloadBtn.addEventListener('click', function() {
         this.textContent = '⏳ جاري التحميل...';
         this.style.opacity = '0.7';
         this.style.background = 'linear-gradient(135deg, #ff8800, #cc6600)';
@@ -104,13 +136,15 @@
                 this.style.opacity = '1';
             }, 2000);
         }, 1500);
-        window.open('https://www.mediafire.com/file/ald_pro_v5.0.zip/file', '_blank');
+        window.open(currentDownloadUrl, '_blank');
     });
+
+    checkLocalDownload();
 
     window.addEventListener('keydown', (event) => {
         if (event.key === 'F8') {
             event.preventDefault();
-            document.getElementById('downloadBtn').click();
+            downloadBtn.click();
         }
     });
 
