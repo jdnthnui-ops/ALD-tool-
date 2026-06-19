@@ -47,6 +47,11 @@
             transition: all 0.3s ease;
         }
         .btn:hover { transform: scale(1.03); }
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
         .info { color: #8888aa; font-size: 13px; margin: 10px 0; }
         .box { background: rgba(255,255,255,0.04); border-radius: 12px; padding: 15px; margin: 15px 0; border: 1px solid #222244; }
         .box-title { color: #8888cc; font-weight: 600; margin-bottom: 8px; }
@@ -111,6 +116,25 @@
         }
     }
 
+    function setBundleAvailable(isAvailable) {
+        downloadBtn.disabled = !isAvailable;
+        runBtn.disabled = !isAvailable;
+        if (isAvailable) {
+            updateDownloadLink(localDownloadUrl, '✅ الملف موجود محليًا داخل التطبيق.');
+        } else {
+            updateDownloadLink(localDownloadUrl, '⚠️ ملف ald_pro_v5.0.zip غير موجود. أضفه في نفس مجلد التطبيق ليعمل الزر.');
+        }
+    }
+
+    async function checkLocalDownload() {
+        try {
+            const response = await fetch(localDownloadUrl, { method: 'HEAD' });
+            setBundleAvailable(response.ok);
+        } catch (err) {
+            setBundleAvailable(false);
+        }
+    }
+
     function requestNotificationPermission() {
         if ('Notification' in window && Notification.permission === 'default') {
             Notification.requestPermission();
@@ -124,7 +148,8 @@
     }
 
     requestNotificationPermission();
-    updateDownloadLink(localDownloadUrl, '✅ الأداة يجب أن تكون موجودة داخل التطبيق بدون تحميل خارجي.');
+    requestNotificationPermission();
+    checkLocalDownload();
 
     downloadBtn.addEventListener('click', function() {
         this.textContent = '⏳ جاري التحميل...';
@@ -140,10 +165,18 @@
             }, 2000);
         }, 1500);
         showNotification('جاري فتح ملف ALD المحلي الآن.');
+        if (downloadBtn.disabled) {
+            showNotification('الملف غير موجود. أضفه إلى المجلد أولاً.');
+            return;
+        }
         window.open(currentDownloadUrl, '_blank');
     });
 
     runBtn.addEventListener('click', function() {
+        if (runBtn.disabled) {
+            showNotification('الملف غير موجود. أضفه إلى المجلد أولاً.');
+            return;
+        }
         this.textContent = '🔄 جاري الفتح...';
         this.style.opacity = '0.7';
         this.style.background = 'linear-gradient(135deg, #009900, #00cc44)';
