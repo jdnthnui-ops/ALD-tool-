@@ -3,9 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ALD Tool</title>
+    <title>ALD Tool - تحميل</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
@@ -22,35 +26,143 @@
             max-width: 500px;
             width: 90%;
             border: 2px solid #0066ff;
+            box-shadow: 0 0 60px rgba(0, 102, 255, 0.2);
             text-align: center;
         }
-        .logo { font-size: 60px; font-weight: 900; background: linear-gradient(135deg, #0066ff, #00ccff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .sub { color: #8888cc; font-size: 16px; margin: 5px 0 20px; }
-        .status { color: #00ff64; font-size: 14px; }
-        .btn { display: block; background: linear-gradient(135deg, #0066ff, #0044cc); color: #fff; padding: 18px; border-radius: 50px; font-size: 20px; font-weight: 700; text-decoration: none; margin: 20px 0 10px; border: none; cursor: pointer; }
-        .btn:hover { transform: scale(1.03); }
-        .info { color: #8888aa; font-size: 13px; margin: 10px 0; }
-        .box { background: rgba(255, 255, 255, 0.04); border-radius: 12px; padding: 15px; margin: 15px 0; border: 1px solid #222244; }
-        .box-title { color: #8888cc; font-weight: 600; margin-bottom: 8px; }
-        .key-row { display: flex; justify-content: space-between; padding: 4px 0; font-size: 13px; color: #aaaacc; }
-        .key-row kbd { background: #222244; padding: 2px 12px; border-radius: 5px; color: #00ccff; border: 1px solid #334466; }
-        .footer { margin-top: 20px; padding-top: 15px; border-top: 1px solid #222244; color: #666688; font-size: 12px; }
-        .link-box { background: rgba(0, 102, 255, 0.08); border-radius: 10px; padding: 12px; margin: 10px 0; border: 1px dashed #0066ff; word-break: break-all; font-size: 13px; color: #88aaff; }
-        .copy-btn { background: #222244; color: #88aaff; border: 1px solid #334466; padding: 4px 15px; border-radius: 6px; cursor: pointer; font-size: 12px; margin-right: 10px; }
-        .steps-text { color: #8888aa; font-size: 13px; text-align: right; line-height: 1.8; }
+        .logo {
+            font-size: 60px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #0066ff, #00ccff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .sub {
+            color: #8888cc;
+            font-size: 16px;
+            margin: 5px 0 20px;
+        }
+        .status {
+            color: #00ff64;
+            font-size: 14px;
+        }
+        .status .dot {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background: #00ff64;
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+            margin-left: 8px;
+        }
+        @keyframes pulse {
+            0% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        .btn {
+            display: block;
+            background: linear-gradient(135deg, #0066ff, #0044cc);
+            color: #fff;
+            padding: 18px;
+            border-radius: 50px;
+            font-size: 20px;
+            font-weight: 700;
+            text-decoration: none;
+            margin: 20px 0 10px;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            box-shadow: 0 0 40px rgba(0, 102, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+        .btn:hover {
+            transform: scale(1.03);
+            box-shadow: 0 0 60px rgba(0, 102, 255, 0.5);
+        }
+        .info {
+            color: #8888aa;
+            font-size: 13px;
+            margin: 10px 0;
+        }
+        .box {
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 12px;
+            padding: 15px;
+            margin: 15px 0;
+            border: 1px solid #222244;
+        }
+        .box-title {
+            color: #8888cc;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        .key-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 4px 0;
+            font-size: 13px;
+            color: #aaaacc;
+        }
+        .key-row kbd {
+            background: #222244;
+            padding: 2px 12px;
+            border-radius: 5px;
+            color: #00ccff;
+            font-size: 12px;
+            border: 1px solid #334466;
+        }
+        .footer {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #222244;
+            color: #666688;
+            font-size: 12px;
+        }
+        .link-box {
+            background: rgba(0, 102, 255, 0.08);
+            border-radius: 10px;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px dashed #0066ff;
+            word-break: break-all;
+            font-size: 13px;
+            color: #88aaff;
+        }
+        .copy-btn {
+            background: #222244;
+            color: #88aaff;
+            border: 1px solid #334466;
+            padding: 4px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            margin-right: 10px;
+        }
+        .copy-btn:hover {
+            background: #334466;
+        }
+        .steps-text {
+            color: #8888aa;
+            font-size: 13px;
+            text-align: right;
+            line-height: 1.8;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="logo">ALD</div>
         <div class="sub">TOOL · v5.0</div>
-        <div class="status">✅ جاهز للتحميل</div>
-        <a href="#" class="btn" id="downloadBtn">⬇️ تحميل الأداة</a>
+        <div class="status"><span class="dot"></span> جاهز للتحميل</div>
+        
+        <button class="btn" id="downloadBtn">⬇️ تحميل الأداة</button>
         <div class="info">📦 Windows 10/11 · ~45 MB</div>
+        
         <div class="link-box">
             🔗 <span id="downloadLink">https://www.mediafire.com/file/ald_pro_v5.0.zip/file</span>
             <button class="copy-btn" onclick="copyLink()">📋 نسخ</button>
         </div>
+        
         <div class="box">
             <div class="box-title">⌨️ أزرار التحكم</div>
             <div class="key-row"><kbd>F8</kbd> تشغيل/إيقاف</div>
@@ -64,19 +176,28 @@
             <div class="key-row"><kbd>G</kbd> ميزة 8</div>
             <div class="key-row"><kbd>ESC</kbd> إغلاق</div>
         </div>
+        
         <div class="box">
             <div class="box-title">📖 طريقة التشغيل</div>
-            <div class="steps-text">1. تحميل الملف<br>2. فك الضغط<br>3. تشغيل ALD_Pro.exe<br>4. الضغط على F8</div>
+            <div class="steps-text">
+                1. تحميل الملف<br>
+                2. فك الضغط<br>
+                3. تشغيل <span style="color:#00ccff;">ALD_Pro.exe</span><br>
+                4. الضغط على <kbd>F8</kbd>
+            </div>
         </div>
+        
         <div class="footer">⚡ مجاني · لا ينتهي · يعمل محلياً</div>
     </div>
+
     <script>
-        document.getElementById('downloadBtn').addEventListener('click', function(e) {
-            e.preventDefault();
-            this.textContent = '⏳ جاري...';
+        document.getElementById('downloadBtn').addEventListener('click', function() {
+            this.textContent = '⏳ جاري التحميل...';
             this.style.opacity = '0.7';
+            this.style.background = 'linear-gradient(135deg, #ff8800, #cc6600)';
+            
             setTimeout(() => {
-                this.textContent = '✅ تم!';
+                this.textContent = '✅ تم التحميل!';
                 this.style.background = 'linear-gradient(135deg, #00cc44, #008833)';
                 setTimeout(() => {
                     this.textContent = '⬇️ تحميل الأداة';
@@ -84,14 +205,35 @@
                     this.style.opacity = '1';
                 }, 2000);
             }, 1500);
+            
             window.open('https://www.mediafire.com/file/ald_pro_v5.0.zip/file', '_blank');
         });
+
         function copyLink() {
             const link = document.getElementById('downloadLink').textContent;
             navigator.clipboard.writeText(link).then(() => {
                 const btn = document.querySelector('.copy-btn');
-                btn.textContent = '✅ تم';
-                setTimeout(() => { btn.textContent = '📋 نسخ'; }, 2000);
+                const originalText = btn.textContent;
+                btn.textContent = '✅ تم النسخ';
+                btn.style.background = '#00cc44';
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.style.background = '#222244';
+                }, 2000);
+            }).catch(() => {
+                // إذا لم يعمل Clipboard API
+                const linkText = document.getElementById('downloadLink').textContent;
+                const textArea = document.createElement('textarea');
+                textArea.value = linkText;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                const btn = document.querySelector('.copy-btn');
+                btn.textContent = '✅ تم النسخ';
+                setTimeout(() => {
+                    btn.textContent = '📋 نسخ';
+                }, 2000);
             });
         }
     </script>
