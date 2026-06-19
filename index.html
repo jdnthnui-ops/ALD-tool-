@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ALD Tool</title>
+    <title>ALD Tool - تحميل مباشر</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -14,6 +14,7 @@
             justify-content: center;
             align-items: center;
             color: #fff;
+            text-align: center;
         }
         .container {
             background: rgba(0,0,0,0.85);
@@ -22,7 +23,7 @@
             max-width: 500px;
             width: 90%;
             border: 2px solid #0066ff;
-            text-align: center;
+            box-shadow: 0 0 60px rgba(0,102,255,0.2);
         }
         .logo { font-size: 60px; font-weight: 900; background: linear-gradient(135deg, #0066ff, #00ccff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .sub { color: #8888cc; font-size: 16px; margin: 5px 0 20px; }
@@ -39,125 +40,101 @@
             cursor: pointer;
             width: 100%;
             margin: 20px 0 10px;
+            transition: all 0.3s ease;
         }
-        .btn:hover { transform: scale(1.03); }
+        .btn:hover { transform: scale(1.03); opacity: 0.9; }
+        .btn-green { background: linear-gradient(135deg, #00cc44, #008833); }
         .info { color: #8888aa; font-size: 13px; margin: 10px 0; }
         .box { background: rgba(255,255,255,0.04); border-radius: 12px; padding: 15px; margin: 15px 0; border: 1px solid #222244; }
         .box-title { color: #8888cc; font-weight: 600; margin-bottom: 8px; }
         .key-row { display: flex; justify-content: space-between; padding: 4px 0; font-size: 13px; color: #aaaacc; }
         .key-row kbd { background: #222244; padding: 2px 12px; border-radius: 5px; color: #00ccff; border: 1px solid #334466; }
         .footer { margin-top: 20px; padding-top: 15px; border-top: 1px solid #222244; color: #666688; font-size: 12px; }
-        .link-box { 
-            background: rgba(0,102,255,0.08); 
-            border-radius: 10px; 
-            padding: 12px; 
-            margin: 10px 0; 
-            border: 1px dashed #0066ff; 
-            word-break: break-all; 
-            font-size: 13px; 
-            color: #88aaff; 
-            cursor: pointer;
-        }
-        .link-box:hover {
-            background: rgba(0,102,255,0.15);
-        }
-        .copy-btn { background: #222244; color: #88aaff; border: 1px solid #334466; padding: 4px 15px; border-radius: 6px; cursor: pointer; font-size: 12px; margin-right: 10px; }
-        .copy-btn:hover { background: #334466; }
         .steps-text { color: #8888aa; font-size: 13px; text-align: right; line-height: 1.8; }
+        .file-info {
+            background: rgba(0,102,255,0.05);
+            border-radius: 10px;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #222244;
+            font-size: 12px;
+            color: #8888aa;
+        }
+        .file-info span { color: #00ccff; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="logo">ALD</div>
-        <div class="sub">TOOL · v5.0</div>
-        <div class="status">✅ جاهز للتحميل</div>
 
-        <!-- زر التحميل -->
-        <button class="btn" id="downloadBtn">⬇️ تحميل الأداة</button>
-        <div class="info">📦 Windows 10/11 · ~45 MB</div>
+<div class="container">
+    <div class="logo">ALD</div>
+    <div class="sub">TOOL · v5.0</div>
+    <div class="status">✅ تحميل مباشر</div>
 
-        <!-- رابط التحميل -->
-        <div class="link-box" id="linkBox" onclick="copyLinkText()">
-            🔗 <span id="downloadLink">https://jdnhnui-ops.github.io/ALD-tool-/download</span>
-            <button class="copy-btn" onclick="event.stopPropagation(); copyLink()">📋 نسخ</button>
-        </div>
+    <!-- زر التحميل المباشر -->
+    <button class="btn" id="downloadBtn">⬇️ تحميل الأداة</button>
+    <div class="info">📦 Windows 10/11 · ~45 MB</div>
 
-        <div class="box">
-            <div class="box-title">⌨️ أزرار التحكم</div>
-            <div class="key-row"><kbd>F8</kbd> تشغيل/إيقاف</div>
-            <div class="key-row"><kbd>F1</kbd> ميزة 1</div>
-            <div class="key-row"><kbd>F2</kbd> ميزة 2</div>
-            <div class="key-row"><kbd>F3</kbd> ميزة 3</div>
-            <div class="key-row"><kbd>F4</kbd> ميزة 4</div>
-            <div class="key-row"><kbd>F5</kbd> ميزة 5</div>
-            <div class="key-row"><kbd>F6</kbd> ميزة 6</div>
-            <div class="key-row"><kbd>F7</kbd> ميزة 7</div>
-            <div class="key-row"><kbd>G</kbd> ميزة 8</div>
-            <div class="key-row"><kbd>ESC</kbd> إغلاق</div>
-        </div>
-
-        <div class="box">
-            <div class="box-title">📖 طريقة التشغيل</div>
-            <div class="steps-text">
-                1. تحميل الملف<br>
-                2. فك الضغط<br>
-                3. تشغيل ALD_Pro.exe<br>
-                4. الضغط على F8
-            </div>
-        </div>
-
-        <div class="footer">⚡ مجاني · لا ينتهي · يعمل محلياً</div>
+    <div class="file-info">
+        📁 الملف: <span>ALD_Pro_v5.0.zip</span><br>
+        📥 تحميل مباشر من GitHub
     </div>
 
-    <script>
-        // زر التحميل - يفتح صفحة جديدة
-        document.getElementById('downloadBtn').addEventListener('click', function() {
-            this.textContent = '⏳ جاري...';
-            this.style.opacity = '0.7';
-            
-            // محاكاة تحميل
+    <!-- طريقة التشغيل -->
+    <div class="box">
+        <div class="box-title">⌨️ أزرار التحكم</div>
+        <div class="key-row"><kbd>F8</kbd> تشغيل/إيقاف</div>
+        <div class="key-row"><kbd>F1</kbd> ميزة 1</div>
+        <div class="key-row"><kbd>F2</kbd> ميزة 2</div>
+        <div class="key-row"><kbd>F3</kbd> ميزة 3</div>
+        <div class="key-row"><kbd>F4</kbd> ميزة 4</div>
+        <div class="key-row"><kbd>F5</kbd> ميزة 5</div>
+        <div class="key-row"><kbd>F6</kbd> ميزة 6</div>
+        <div class="key-row"><kbd>F7</kbd> ميزة 7</div>
+        <div class="key-row"><kbd>G</kbd> ميزة 8</div>
+        <div class="key-row"><kbd>ESC</kbd> إغلاق</div>
+    </div>
+
+    <div class="box">
+        <div class="box-title">📖 طريقة التشغيل</div>
+        <div class="steps-text">
+            1. تحميل الملف<br>
+            2. فك الضغط<br>
+            3. تشغيل <span style="color:#00ccff;">ALD_Pro.exe</span><br>
+            4. الضغط على <kbd>F8</kbd>
+        </div>
+    </div>
+
+    <div class="footer">⚡ مجاني · لا ينتهي · تحميل مباشر</div>
+</div>
+
+<script>
+    // الرابط المباشر للتحميل من GitHub
+    const downloadUrl = 'https://raw.githubusercontent.com/jdnhnui-ops/ALD-tool-/main/ALD_Pro_v5.0.zip';
+
+    document.getElementById('downloadBtn').addEventListener('click', function() {
+        this.textContent = '⏳ جاري التحميل...';
+        this.style.opacity = '0.7';
+        this.style.background = 'linear-gradient(135deg, #ff8800, #cc6600)';
+
+        // بدأ التحميل المباشر
+        const link = document.createElement('a');
+        link.href = downloadUrl;
+        link.download = 'ALD_Pro_v5.0.zip';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
+        setTimeout(() => {
+            this.textContent = '✅ تم التحميل!';
+            this.style.background = 'linear-gradient(135deg, #00cc44, #008833)';
             setTimeout(() => {
-                this.textContent = '✅ تم!';
-                this.style.background = 'linear-gradient(135deg, #00cc44, #008833)';
-                
-                // فتح الرابط في نافذة جديدة
-                window.open('https://jdnhnui-ops.github.io/ALD-tool-/download', '_blank');
-                
-                setTimeout(() => {
-                    this.textContent = '⬇️ تحميل الأداة';
-                    this.style.background = 'linear-gradient(135deg, #0066ff, #0044cc)';
-                    this.style.opacity = '1';
-                }, 3000);
-            }, 1500);
-        });
+                this.textContent = '⬇️ تحميل الأداة';
+                this.style.background = 'linear-gradient(135deg, #0066ff, #0044cc)';
+                this.style.opacity = '1';
+            }, 3000);
+        }, 2000);
+    });
+</script>
 
-        // نسخ الرابط
-        function copyLink() {
-            const link = document.getElementById('downloadLink').textContent;
-            navigator.clipboard.writeText(link).then(() => {
-                const btn = document.querySelector('.copy-btn');
-                btn.textContent = '✅ تم';
-                btn.style.background = '#00cc44';
-                setTimeout(() => {
-                    btn.textContent = '📋 نسخ';
-                    btn.style.background = '#222244';
-                }, 2000);
-            });
-        }
-
-        // الضغط على الرابط ينسخ
-        function copyLinkText() {
-            const link = document.getElementById('downloadLink').textContent;
-            navigator.clipboard.writeText(link).then(() => {
-                const box = document.getElementById('linkBox');
-                box.style.borderColor = '#00ff64';
-                box.style.background = 'rgba(0,255,100,0.1)';
-                setTimeout(() => {
-                    box.style.borderColor = '#0066ff';
-                    box.style.background = 'rgba(0,102,255,0.08)';
-                }, 1500);
-            });
-        }
-    </script>
 </body>
 </html>
