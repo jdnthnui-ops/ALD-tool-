@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ALD Tool - تحميل</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="icon-192.png" sizes="192x192" type="image/png">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    <meta name="theme-color" content="#001122">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -61,6 +65,7 @@
     <div class="sub">TOOL · v5.0</div>
     <div class="status">✅ جاهز للتحميل</div>
     <button class="btn" id="downloadBtn">⬇️ تحميل الأداة</button>
+    <button class="btn" id="installBtn" style="display:none;">📱 تثبيت التطبيق</button>
     <div class="info">📦 Windows 10/11 · ~45 MB</div>
     <div class="download-link">
         🔗 <span id="downloadLink">https://www.mediafire.com/file/ald_pro_v5.0.zip/file</span>
@@ -101,6 +106,41 @@
         }, 1500);
         window.open('https://www.mediafire.com/file/ald_pro_v5.0.zip/file', '_blank');
     });
+
+    window.addEventListener('keydown', (event) => {
+        if (event.key === 'F8') {
+            event.preventDefault();
+            document.getElementById('downloadBtn').click();
+        }
+    });
+
+    const installBtn = document.getElementById('installBtn');
+    let deferredInstallPrompt = null;
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredInstallPrompt = e;
+        installBtn.style.display = 'block';
+    });
+
+    installBtn.addEventListener('click', () => {
+        if (!deferredInstallPrompt) return;
+        deferredInstallPrompt.prompt();
+        deferredInstallPrompt.userChoice.then((choiceResult) => {
+            if (choiceResult.outcome === 'accepted') {
+                installBtn.textContent = '✅ تم التثبيت';
+            }
+            deferredInstallPrompt = null;
+            installBtn.style.display = 'none';
+        });
+    });
+
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('sw.js')
+            .then(() => console.log('Service worker registered'))
+            .catch(() => console.log('Service worker registration failed'));
+    }
+
     function copyLink() {
         const link = document.getElementById('downloadLink').textContent;
         navigator.clipboard.writeText(link).then(() => {

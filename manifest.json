@@ -1,0 +1,23 @@
+
+{
+  "name": "ALD Tool",
+  "short_name": "ALD",
+  "description": "ALD Pro v5.0 - أداة تحميل وتثبيت",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#001122",
+  "theme_color": "#001122",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
