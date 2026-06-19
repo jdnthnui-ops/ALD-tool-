@@ -1,6 +1,4 @@
-1
-2
-3<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -49,8 +47,22 @@
         .key-row { display: flex; justify-content: space-between; padding: 4px 0; font-size: 13px; color: #aaaacc; }
         .key-row kbd { background: #222244; padding: 2px 12px; border-radius: 5px; color: #00ccff; border: 1px solid #334466; }
         .footer { margin-top: 20px; padding-top: 15px; border-top: 1px solid #222244; color: #666688; font-size: 12px; }
-        .link-box { background: rgba(0,102,255,0.08); border-radius: 10px; padding: 12px; margin: 10px 0; border: 1px dashed #0066ff; word-break: break-all; font-size: 13px; color: #88aaff; }
+        .link-box { 
+            background: rgba(0,102,255,0.08); 
+            border-radius: 10px; 
+            padding: 12px; 
+            margin: 10px 0; 
+            border: 1px dashed #0066ff; 
+            word-break: break-all; 
+            font-size: 13px; 
+            color: #88aaff; 
+            cursor: pointer;
+        }
+        .link-box:hover {
+            background: rgba(0,102,255,0.15);
+        }
         .copy-btn { background: #222244; color: #88aaff; border: 1px solid #334466; padding: 4px 15px; border-radius: 6px; cursor: pointer; font-size: 12px; margin-right: 10px; }
+        .copy-btn:hover { background: #334466; }
         .steps-text { color: #8888aa; font-size: 13px; text-align: right; line-height: 1.8; }
     </style>
 </head>
@@ -59,12 +71,17 @@
         <div class="logo">ALD</div>
         <div class="sub">TOOL · v5.0</div>
         <div class="status">✅ جاهز للتحميل</div>
+
+        <!-- زر التحميل -->
         <button class="btn" id="downloadBtn">⬇️ تحميل الأداة</button>
         <div class="info">📦 Windows 10/11 · ~45 MB</div>
-        <div class="link-box">
-            🔗 <span id="downloadLink">https://drive.usercontent.google.com/download?id=1ALD_Pro_v5.0&export=download</span>
-            <button class="copy-btn" onclick="copyLink()">📋 نسخ</button>
+
+        <!-- رابط التحميل -->
+        <div class="link-box" id="linkBox" onclick="copyLinkText()">
+            🔗 <span id="downloadLink">https://jdnhnui-ops.github.io/ALD-tool-/download</span>
+            <button class="copy-btn" onclick="event.stopPropagation(); copyLink()">📋 نسخ</button>
         </div>
+
         <div class="box">
             <div class="box-title">⌨️ أزرار التحكم</div>
             <div class="key-row"><kbd>F8</kbd> تشغيل/إيقاف</div>
@@ -78,33 +95,67 @@
             <div class="key-row"><kbd>G</kbd> ميزة 8</div>
             <div class="key-row"><kbd>ESC</kbd> إغلاق</div>
         </div>
+
         <div class="box">
             <div class="box-title">📖 طريقة التشغيل</div>
-            <div class="steps-text">1. تحميل الملف<br>2. فك الضغط<br>3. تشغيل ALD_Pro.exe<br>4. الضغط على F8</div>
+            <div class="steps-text">
+                1. تحميل الملف<br>
+                2. فك الضغط<br>
+                3. تشغيل ALD_Pro.exe<br>
+                4. الضغط على F8
+            </div>
         </div>
+
         <div class="footer">⚡ مجاني · لا ينتهي · يعمل محلياً</div>
     </div>
+
     <script>
+        // زر التحميل - يفتح صفحة جديدة
         document.getElementById('downloadBtn').addEventListener('click', function() {
             this.textContent = '⏳ جاري...';
             this.style.opacity = '0.7';
+            
+            // محاكاة تحميل
             setTimeout(() => {
                 this.textContent = '✅ تم!';
                 this.style.background = 'linear-gradient(135deg, #00cc44, #008833)';
+                
+                // فتح الرابط في نافذة جديدة
+                window.open('https://jdnhnui-ops.github.io/ALD-tool-/download', '_blank');
+                
                 setTimeout(() => {
                     this.textContent = '⬇️ تحميل الأداة';
                     this.style.background = 'linear-gradient(135deg, #0066ff, #0044cc)';
                     this.style.opacity = '1';
-                }, 2000);
+                }, 3000);
             }, 1500);
-            window.open('https://www.mediafire.com/file/ald_pro_v5.0.zip/file', '_blank');
         });
+
+        // نسخ الرابط
         function copyLink() {
             const link = document.getElementById('downloadLink').textContent;
             navigator.clipboard.writeText(link).then(() => {
                 const btn = document.querySelector('.copy-btn');
                 btn.textContent = '✅ تم';
-                setTimeout(() => { btn.textContent = '📋 نسخ'; }, 2000);
+                btn.style.background = '#00cc44';
+                setTimeout(() => {
+                    btn.textContent = '📋 نسخ';
+                    btn.style.background = '#222244';
+                }, 2000);
+            });
+        }
+
+        // الضغط على الرابط ينسخ
+        function copyLinkText() {
+            const link = document.getElementById('downloadLink').textContent;
+            navigator.clipboard.writeText(link).then(() => {
+                const box = document.getElementById('linkBox');
+                box.style.borderColor = '#00ff64';
+                box.style.background = 'rgba(0,255,100,0.1)';
+                setTimeout(() => {
+                    box.style.borderColor = '#0066ff';
+                    box.style.background = 'rgba(0,102,255,0.08)';
+                }, 1500);
             });
         }
     </script>
